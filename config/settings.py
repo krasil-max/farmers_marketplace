@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'locations',
     'reviews',
     'core',
+    'api',
 ]
 
 MIDDLEWARE = [
