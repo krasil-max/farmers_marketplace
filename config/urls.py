@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/products/', include('products.urls')),  # Products app
     path('api/locations/', include('locations.urls')),  # Locations app
     path('api/reviews/', include('reviews.urls')),    # Reviews app
+    path('api/core/', include('core.urls')),  # Added core app URLs
     path('api/', include('api.urls')),                # Aggregated API views
 ]
 
