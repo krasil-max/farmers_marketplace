@@ -4,6 +4,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     is_farmer = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
     def assign_role(self, role_name):
         group, _ = Group.objects.get_or_create(name=role_name)
@@ -19,7 +20,7 @@ class FarmerProfile(models.Model):
     location = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
     whatsapp_link = models.URLField(blank=True, null=True)
-    profile_image = models.ImageField(upload_to="profiles/", blank=True, null=True)
+    profile_image = models.ImageField(upload_to="farmer_profiles/", blank=True, null=True)
     average_rating = models.FloatField(default=0.0)
 
     def __str__(self):

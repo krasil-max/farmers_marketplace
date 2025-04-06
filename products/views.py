@@ -21,4 +21,10 @@ class ProductViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAdminUser]  # Only admins can manage categories
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Allows read-only access to all users
+
+    def perform_create(self, serializer):
+        # Ensure only admins can create categories
+        if not self.request.user.is_staff:  # Assuming is_staff means admin
+            raise PermissionDenied("You do not have permission to create categories.")
+        serializer.save()
