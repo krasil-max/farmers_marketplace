@@ -10,11 +10,11 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Ensure only authenticated farmers can create
-        serializer.save(farmer=self.request.user.farmerprofile)
+        serializer.save(farmer=self.request.user.farmer_profile)
 
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.is_farmer:
-            return Product.objects.filter(farmer=self.request.user.farmerprofile)
+            return Product.objects.filter(farmer=self.request.user.farmer_profile)
         return Product.objects.all()
 
 
