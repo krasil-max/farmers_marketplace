@@ -16,6 +16,11 @@ class RegisterView(generics.CreateAPIView):
 
 # Custom login view using token authentication
 class CustomAuthToken(ObtainAuthToken):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        return Response({"detail": "Login with POST only."})
+
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
@@ -24,6 +29,7 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': token.user_id,
             'username': token.user.username,
         })
+
 
 # Profile view for the logged in user
 class UserProfileView(generics.RetrieveUpdateAPIView):
