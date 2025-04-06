@@ -8,16 +8,20 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'profile_image', 'is_farmer', 'is_admin']
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    
+    is_farmer = serializers.BooleanField(default=False)
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email', 'password', 'is_farmer']
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        # Create user using the create_user method which handles password hashing.
-        user = CustomUser.objects.create_user(**validated_data)
+        password = validated_data.pop('password')
+        user = CustomUser(**validated_data)
+        user.set_password(password)
+        user.save()
         return user
+
 
 class FarmerProfileSerializer(serializers.ModelSerializer):
     class Meta:
