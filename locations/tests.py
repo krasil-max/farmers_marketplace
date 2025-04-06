@@ -35,7 +35,7 @@ class LocationAPITests(APITestCase):
             'longitude': 34.7679
         }
         response = self.client.post(self.list_url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_create_location_authenticated(self):
         self.client.force_authenticate(user=self.user)
