@@ -1,15 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from api.views import UserViewSet, ReviewViewSet
 from products.views import ProductViewSet, CategoryViewSet
-from users.views import FarmerViewSet
-from reviews.views import ReviewCreateView
 
 router = DefaultRouter()
-router.register(r'products', ProductViewSet)
-router.register(r'categories', CategoryViewSet)
-router.register(r'farmers', FarmerViewSet)
-router.register(r'reviews', ReviewCreateView)
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'products', ProductViewSet, basename='product')
+router.register(r'categories', CategoryViewSet, basename='category')
+router.register(r'reviews', ReviewViewSet, basename='review')
 
 urlpatterns = [
-    path('', include(router.urls)),  # Aggregated API routes
+    path('', include(router.urls)),
 ]
